@@ -1,12 +1,11 @@
 # Pi Info Display
 
-Simple e-ink display powered by raspberry pi showing weather and tram/bus stops.
+Simple e-ink display powered by raspberry pi showing weather 
 
 ## Requirements
 
-Two environment variables needs to be set
+An environment variable needs to be set
 
-* CITY_ID - city id for use with [Open Weather Map](https://openweathermap.org/)
 * OWM_API_KEY - API key for Open Weather Map
 
 ## With some help from the following projects
