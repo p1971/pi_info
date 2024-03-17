@@ -1,31 +1,26 @@
 #!/usr/bin/python3
 # -*- coding:utf-8 -*-
-
 import logging
 import os
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime
 
 from weather_renderer import WeatherRenderer
 
+sys.path.append(r'lib')
 from waveshare_epd import epd7in5
 
-sys.path.append(r'lib')
-
-def refresh():
+def refresh(weather_api_key, city_id):
     logging.info('Refresh ...')
 
     try:
         epd = epd7in5.EPD()
         epd.init()
 
-        weather_api_key = os.getenv('OWM_API_KEY')
-        city_id =  int(os.getenv('CITY_ID'))
+        w = WeatherRenderer(weather_api_key, city_id, epd.height, epd.width)
 
-        w = WeatherRenderer(weather_api_key, epd.height, epd.width)
-
-        if datetime.now().strftime("%H:%M") > '21:00':
+        if datetime.now().strftime("%H:%M") > '23:00':
             epd.Clear()
             image = w.draw_moon()
         else:
@@ -48,9 +43,15 @@ def main():
         logging.error('CITY_ID is not defined')
         exit(-2)
 
-    refresh()
+    weather_api_key = os.getenv('OWM_API_KEY')
+    city_id = int(os.getenv('CITY_ID'))
+
+    refresh(weather_api_key, city_id)
 
 if __name__ == '__main__':
-    while True:
-        main()
-        time.sleep(300)
+    try:
+        while True:
+            main()
+            time.sleep(300)
+    except KeyboardInterrupt:
+        sys.exit(0)
