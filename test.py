@@ -14,9 +14,11 @@ def refresh():
 
     width = 640
     height = 384
+    
     weather_api_key = os.getenv('OWM_API_KEY')
+    city_id = 2643743
 
-    renderer = WeatherRenderer(weather_api_key, height, width)
+    renderer = WeatherRenderer(weather_api_key, city_id, height, width)
 
     try:
         if datetime.now().strftime("%H:%M") > '23:00':

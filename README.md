@@ -18,8 +18,8 @@ export CITY_ID=2643743
 
 ```bash
 python3 -m venv .venv
-pip3 install -r requirements.txt
 source ./.venv/bin/activate
+pip3 install -r requirements.txt
 python3 eink_display.py
 ```
 
