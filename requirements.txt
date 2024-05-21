@@ -1,4 +1,4 @@
-requests==2.31.0
+requests==2.32.0
 numpy==1.22.0
 Pillow==10.2.0
 pyowm==3.0.0
