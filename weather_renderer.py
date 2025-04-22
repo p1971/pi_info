@@ -37,6 +37,15 @@ class WeatherRenderer:
         image.paste(moon, (0, 0, x, y), moon)
         return image
 
+    def draw_error(self, error_message):
+        image = Image.new('1', (self.height, self.width), 255)
+        draw = ImageDraw.Draw(image)
+        self.__draw_error(draw, error_message)
+        return image
+
+    def __draw_error(self, draw, error_message):
+        _, h1 = self.__draw_text(draw, self.__font20, 5, 5, error_message)
+
     def __draw_weather_report(self, drawblack):
         weather_svc = WeatherService(self.owm_api_key, self.city_id)
         forecast = weather_svc.get_weather()
@@ -52,7 +61,7 @@ class WeatherRenderer:
         self.__draw_text(drawblack, self.__font20, 5, h1+40, str("max {0:>4}\u00b0C".format(forecast.max_temperature)))
 
         # forecast
-        local_time = forecast.reftime.strftime('%H:%M')
+        local_time = forecast.reftime.strftime('%a %H:%M')
         description = textwrap.fill(
             f"{forecast.description} @ {local_time}", width=55)
         _, h4 = self.__draw_multiline_text(
