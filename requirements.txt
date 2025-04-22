@@ -1,6 +1,6 @@
-requests==2.32.0
-numpy==1.22.0
-Pillow==10.2.0
-pyowm==3.0.0
-spidev==3.5
-pytz==2020.1
+requests~=2.32.0
+numpy~=1.19.1
+Pillow~=8.2.0
+pyowm~=3.0.0
+spidev~=3.5
+pytz~=2020.1
