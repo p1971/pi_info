@@ -4,7 +4,6 @@ import logging
 import os
 import sys
 import time
-from datetime import datetime
 
 from weather_renderer import WeatherRenderer
 
@@ -20,11 +19,12 @@ def refresh(weather_api_key, city_id):
 
         w = WeatherRenderer(weather_api_key, city_id, epd.height, epd.width)
 
-        if datetime.now().strftime("%H:%M") > '23:00':
-            epd.Clear()
-            image = w.draw_moon()
-        else:
-            image = w.draw_update()
+        image = w.draw_update()
+        # if datetime.now().strftime("%H:%M") > '23:00':
+        #     epd.Clear()
+        #     image = w.draw_moon()
+        # else:
+        #     image = w.draw_update()
         epd.display(epd.getbuffer(image))
         epd.sleep()
     except IOError as io_error:

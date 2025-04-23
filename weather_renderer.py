@@ -2,16 +2,8 @@
 # -*- coding:utf-8 -*-
 
 import logging
-import sys
 import textwrap
-
-from dataclasses import dataclass
-from datetime import datetime
-
 from PIL import Image, ImageDraw, ImageFont
-from pyowm.owm import OWM
-from pytz import timezone
-
 from weather_service import *
 
 class WeatherRenderer:
