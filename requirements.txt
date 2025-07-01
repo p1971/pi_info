@@ -3,7 +3,7 @@ charset-normalizer==3.4.1
 geojson==2.5.0
 idna==3.10
 numpy==2.2.5
-pillow==11.2.1
+pillow==11.3.0
 pyowm==3.3.0
 PySocks==1.7.1
 pytz==2025.2
