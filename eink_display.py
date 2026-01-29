@@ -8,28 +8,44 @@ import time
 from weather_renderer import WeatherRenderer
 
 sys.path.append(r'lib')
-from waveshare_epd import epd7in5
+from waveshare_epd import epd7in5, epdconfig
+
+logging.basicConfig(
+	format='%(asctime)s %(levelname)-8s %(message)s',
+	level=logging.INFO,
+	datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+def initialise_panel():
+    epdconfig.module_init()
+    epd = epd7in5.EPD()
+    epd.reset()
+    epd.init()
+    epd.Clear()
+    return epd
 
 def refresh(weather_api_key, city_id):
-    logging.info('Refresh ...')
+    logging.info('Refresh display ...')
 
     try:
-        epd = epd7in5.EPD()
-        epd.init()
+        epd = initialise_panel()
 
-        w = WeatherRenderer(weather_api_key, city_id, epd.height, epd.width)
-
+        image = update_weather(weather_api_key, city_id, epd.height, epd.width)
         image = w.draw_update()
-        # if datetime.now().strftime("%H:%M") > '23:00':
-        #     epd.Clear()
-        #     image = w.draw_moon()
-        # else:
-        #     image = w.draw_update()
         epd.display(epd.getbuffer(image))
         epd.sleep()
     except IOError as io_error:
         logging.error(io_error)
         exit()
+
+def update_weather(weather_api_key, city_id, height, width):
+    w = WeatherRenderer(weather_api_key, city_id, height, width)
+    try:
+       image = w.draw_update()
+       return image
+    except Exception as error:
+       image = w.draw_error(repr(error))
+    return image
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -50,8 +66,6 @@ def main():
 
 if __name__ == '__main__':
     try:
-        while True:
-            main()
-            time.sleep(300)
+    	main()
     except KeyboardInterrupt:
         sys.exit(0)
