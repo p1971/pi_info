@@ -7,6 +7,6 @@ Pillow==11.3.0
 pyowm==3.3.0
 PySocks==1.7.1
 pytz==2025.2
-requests==2.32.4
+requests==2.33.0
 spidev==3.6
 urllib3==2.5.0
